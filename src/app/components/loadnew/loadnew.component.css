@@ -1,0 +1,16 @@
+.screen__background__shape2 {
+  background: rgba(var(--coorp2), 1);
+}
+.reset {
+  background: rgba(var(--light), 1);
+  color: rgba(var(--dark), 1);
+  font-weight: 500;
+}
+
+.titulo {
+  color: rgba(var(--dark2), 1);
+  margin: 0.67em 0;
+  font-size: 2em;
+  padding: 8px 0;
+  font-weight: bold;
+}

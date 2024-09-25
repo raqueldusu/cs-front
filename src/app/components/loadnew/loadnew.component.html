@@ -1,0 +1,35 @@
+<div class="screen__background">
+  <span class="screen__background__shape screen__background__shape2"></span>
+</div>
+<main>
+  <h1 class="titulo">Carga de imagen para patrón</h1>
+
+  <form [formGroup]="form" class="it-flexbox" id="frm2" style="max-width: 1280px">
+    <fieldset class="container-grid">
+      <div class="field x2">
+        <label>Sincronización de Descuentos</label>
+      </div>
+      <div class="field x2">
+        <button (click)="cargaImagen()">Iniciar</button>
+      </div>
+
+      <!--<div class="field x4" style="display: flex;">-->
+      <div class="field">
+        <label>Procesamiento de Imagen</label>
+      </div>
+      <div class="field">
+        <input type="number" id="width" name="width" formControlName="width" class="form-control" style="width: 300px" />
+      </div>
+      <div class="field x2" *ngIf="!showStopPayments && !showStopCombinePayments">
+        <button (click)="procesarImagen()">Iniciar</button>
+      </div>
+      <!--</div>-->
+    </fieldset>
+  </form>
+
+  <div class="container bottom">
+    <div class="field 100 text-center">
+      <button class="middle history-back" (click)="goBack()">Volver</button>
+    </div>
+  </div>
+</main>

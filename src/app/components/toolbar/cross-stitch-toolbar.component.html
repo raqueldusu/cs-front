@@ -1,0 +1,28 @@
+<section class="topbar">
+  <div class="logo">
+    <a href="#"><img src="../../../assets/img/cross-stitch-icon.png" /></a>
+  </div>
+  <span class="title">Patrones Punto de Cruz</span>
+</section>
+
+<nav class="menu">
+  <button class="toggleButton" onclick="this.nextElementSibling.classList.toggle('showing')">
+    <i class="las la-bars"></i>
+  </button>
+  <ul>
+    <li>
+      <a [routerLink]="['carga-nuevo']" routerLinkActive="active">Carga nuevo patrón</a>
+    </li>
+    <li>
+      <form role="search">
+        <input type="search" role="searchbox" />
+        <i class="las la-search"></i>
+      </form>
+    </li>
+    <li class="sliders">
+      <a class="show" href="javascript: void(0)" (click)="showFilter()">
+        <i class="las la-sliders-h"></i>
+      </a>
+    </li>
+  </ul>
+</nav>
