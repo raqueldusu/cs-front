@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { iapicommonrequest } from '../../interfaces/load/iapicommonrequest';
 
@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./loadnew.component.css'],
 })
 export class LoadNewComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   showStopBackup: boolean = false;
   showStopCleanUpBackup: boolean = false;
@@ -25,7 +25,7 @@ export class LoadNewComponent implements OnInit {
     private router: Router,
     private loadService: LoadService,
     private dialog: MatDialog,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
   ) {
     this.form = this.formBuilder.group({
       fileName: '',
