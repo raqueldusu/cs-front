@@ -6,7 +6,7 @@ import { iapicommonrequest } from '../../interfaces/load/iapicommonrequest';
 import { MandarotyDialogComponent } from '../dialogs/mandaroty-dialog/mandaroty-dialog.component';
 import { OperationOKComponent } from '../dialogs/operationOK/operation-ok/operation-ok.component';
 import { LoadService } from 'src/app/services/load/load.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-loadnew',
