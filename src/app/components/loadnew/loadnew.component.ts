@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { iapicommonrequest } from '../../interfaces/load/iapicommonrequest';
 
@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./loadnew.component.css'],
 })
 export class LoadNewComponent implements OnInit {
-  form: UntypedFormGroup;
+  form: FormGroup;
 
   showStopBackup: boolean = false;
   showStopCleanUpBackup: boolean = false;
@@ -25,7 +25,7 @@ export class LoadNewComponent implements OnInit {
     private router: Router,
     private loadService: LoadService,
     private dialog: MatDialog,
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
       fileName: '',
@@ -50,7 +50,7 @@ export class LoadNewComponent implements OnInit {
       parameter: idSet,
       user: ''
     };
-    this.loadService.cargaImagen(bodyDataFlow).subscribe((res) => {
+    this.loadService.cargaImagen(bodyDataFlow).subscribe((res: any) => {
     });
 
     this.dialog.open(OperationOKComponent);
@@ -68,7 +68,7 @@ export class LoadNewComponent implements OnInit {
         user: ''
       };
 
-      this.loadService.procesarImagen(bodyDataFlow).subscribe((res) => {});
+      this.loadService.procesarImagen(bodyDataFlow).subscribe((res: any) => {});
 
       setTimeout(() => {
         this.dialog.open(OperationOKComponent);
@@ -103,7 +103,7 @@ export class LoadNewComponent implements OnInit {
       user: ''
     };
 
-    this.loadService.descargarPatron(bodyDataFlow).subscribe((res) => {});
+    this.loadService.descargarPatron(bodyDataFlow).subscribe((res: any) => {});
     this.dialog.open(OperationOKComponent);
   }
 

@@ -18,6 +18,7 @@ import { LoadNewComponent } from './components/loadnew/loadnew.component';
 import { OperationKOComponent } from './components/dialogs/operationKO/operation-ko/operation-ko.component';
 import { OperationOKComponent } from './components/dialogs/operationOK/operation-ok/operation-ok.component';
 import { MandarotyDialogComponent } from './components/dialogs/mandaroty-dialog/mandaroty-dialog.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,8 @@ import { MandarotyDialogComponent } from './components/dialogs/mandaroty-dialog/
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatTableModule,
     MatMenuModule,
     MatIconModule,
