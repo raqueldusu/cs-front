@@ -21,15 +21,8 @@ export class LoadService {
   }
 
   procesarImagen(bodyDataFlow: iapicommonrequest): Observable<String> {
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' ,
-      }),
-    };
-
     let urlApi: string = `http://localhost:8293/v1/crossstitch/load/processImage`;
-    return this.httpClient.post<String>(urlApi, JSON.stringify(bodyDataFlow), httpOptions).pipe();
+    return this.httpClient.post<String>(urlApi, JSON.stringify(bodyDataFlow), this.httpOptions).pipe();
   }
 
   descargarPatron(bodyDataFlow: iapicommonrequest): Observable<void> {
