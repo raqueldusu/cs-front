@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonsService } from 'src/app/services/commons.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cross-stitch-toolbar',
@@ -10,6 +11,7 @@ export class CrossStitchToolbarComponent implements OnInit {
   usuario: any;
   constructor(
     private commonService: CommonsService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void { }

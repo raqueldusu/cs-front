@@ -19,6 +19,8 @@ import { OperationKOComponent } from './components/dialogs/operationKO/operation
 import { OperationOKComponent } from './components/dialogs/operationOK/operation-ok/operation-ok.component';
 import { MandarotyDialogComponent } from './components/dialogs/mandaroty-dialog/mandaroty-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 
@@ -32,8 +34,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MandarotyDialogComponent,
   ],
   imports: [
+    BrowserModule, 
+    RouterModule,
     AppRoutingModule,
-    BrowserModule,    
     FormsModule,
     ReactiveFormsModule,
     MatTableModule,
@@ -44,8 +47,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSortModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
