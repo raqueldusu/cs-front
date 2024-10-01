@@ -7,6 +7,8 @@ import { MandarotyDialogComponent } from '../dialogs/mandaroty-dialog/mandaroty-
 import { OperationOKComponent } from '../dialogs/operationOK/operation-ok/operation-ok.component';
 import { LoadService } from 'src/app/services/load/load.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Isellection } from 'src/app/interfaces/common/isellection';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-loadnew',
@@ -16,10 +18,11 @@ import { MatDialog } from '@angular/material/dialog';
 export class LoadNewComponent implements OnInit {
   form: FormGroup;
 
+  collectionList: Isellection[] = [];
   showStopBackup: boolean = false;
   showStopCleanUpBackup: boolean = false;
-  showStopPayments: boolean = false;
-  showStopCombinePayments: boolean = false;
+  imageB64: string = '';
+  previewB64: string = '';
 
   constructor(
     private router: Router,
@@ -29,18 +32,46 @@ export class LoadNewComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       fileName: '',
-      ct: '',
-      imageFixedSize: true,
-      height: 0,
+      name: '',
       width: 0,
       numberColours: 0,
+      collection: 0,
     });
   }
 
   ngOnInit(): void {}
 
+  getCollections() {
+    this.loadService.searchCollections().subscribe((response) => {
+      const todos: Isellection = {
+        id: '',
+        desc: 'Todos',
+      };
+
+      response.unshift(todos);
+      this.collectionList = response;
+    });
+  }
+
   goBack() {
     this.router.navigateByUrl('');
+  }
+
+  capturarFichero(event: any): any {
+    const file = event.target.files[0];
+    
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.imageB64 = String (reader.result);
+    };
+    reader.onerror = error => {
+      this.imageB64 = '';
+    }
+    setTimeout(() => {
+      console.log(this.imageB64);
+    }, 1200);
+    
   }
 
   cargaImagen() {

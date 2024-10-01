@@ -14,3 +14,11 @@
   padding: 8px 0;
   font-weight: bold;
 }
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}

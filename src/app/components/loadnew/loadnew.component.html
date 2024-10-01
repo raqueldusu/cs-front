@@ -1,28 +1,73 @@
 <main>
-  <h1 class="titulo">Carga de imagen para patrón</h1>
-
-  <form [formGroup]="form" class="it-flexbox" id="frm2" style="max-width: 1280px">
-    <fieldset class="container-grid">
-      <div class="field x2">
-        <label>Sincronización de Descuentos</label>
+  <h1 class="titulo">Selecciona tu imagen</h1>
+  <div class="left">
+    <form [formGroup]="form" class="it-flexbox" id="frm2" style="max-width: 640px">
+      <fieldset class="container-grid">
+        <div class="field">
+          <input (change)="capturarFichero($event)" type="file" id="fileName" name="fileName" formControlName="fileName" class="form-control" style="width: 350px">
+        </div>
+        <div class="field">
+          <button (click)="cargaImagen()">Cargar</button>
+        </div>
+      </fieldset>
+  
+      <h1 class="titulo">Configura el patrón</h1>
+  
+      <fieldset class="container-grid">
+        <div class="field x2">
+          <label>Nombre patrón</label>
+        </div>
+        <div class="field x2">
+          <input type="text" id="name" name="name" formControlName="name" class="form-control" style="width: 300px" />
+        </div>
+  
+        <div class="field x2">
+          <label>Puntos ancho de Imagen</label>
+        </div>
+        <div class="field x2">
+          <input type="number" id="width" name="width" formControlName="width" class="form-control" style="width: 300px" />
+        </div>
+  
+        <div class="field x2">
+          <label>Número de colores</label>
+        </div>
+        <div class="field x2">
+          <input type="number" id="numberColours" name="numberColours" formControlName="numberColours" class="form-control" style="width: 300px" />
+        </div>
+  
+        <div class="field x2">
+          <label>Colección</label>
+        </div>
+        <div class="field x2">
+          <select formControlName="collection" class="form-control">
+            <option *ngFor="let collection of collectionList" [value]="collection.id">
+              {{ collection.desc }}
+            </option>
+          </select>
+        </div>
+  
+        <div class="field x3"></div>
+        <div class="field">
+          <button (click)="procesarImagen()">Previsualizar</button>
+        </div>
+  
+      </fieldset>
+    </form>
+  </div>
+  
+  <div class="right">
+    <div class="it-flexbox" id="frm2" style="max-width: 840px">
+      <div class="img" *ngIf="imageB64">
+        <p>Imagen original</p>
+        <img width="600px" [src]="imageB64" alt="">
       </div>
-      <div class="field x2">
-        <button (click)="cargaImagen()">Iniciar</button>
+      
+      <div class="img" *ngIf="previewB64">
+        Previsualización patrón
+        <img width="600px" [src]="previewB64" alt="">
       </div>
-
-      <!--<div class="field x4" style="display: flex;">-->
-      <div class="field">
-        <label>Procesamiento de Imagen</label>
-      </div>
-      <div class="field">
-        <input type="number" id="width" name="width" formControlName="width" class="form-control" style="width: 300px" />
-      </div>
-      <div class="field x2" *ngIf="!showStopPayments && !showStopCombinePayments">
-        <button (click)="procesarImagen()">Iniciar</button>
-      </div>
-      <!--</div>-->
-    </fieldset>
-  </form>
+    </div>
+  </div>
 
   <div class="container bottom">
     <div class="field 100 text-center">

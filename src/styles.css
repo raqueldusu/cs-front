@@ -935,7 +935,7 @@ html {
   input,
   select,
   textarea {
-    height: 32px;
+    height: 52px;
     line-height: 32px;
     padding: 5px;
     color: rgba(var(--light), 1);
@@ -1810,5 +1810,13 @@ html {
     font-size: 2em;
     padding: 8px 0;
     font-weight: bold;
+  }
+
+  .img {
+    border: rgba(var(--color3), 1) 3px solid;
+    width: 840px;
+    text-align: center;
+    margin-right: 30px;
+    
   }
   
