@@ -21,6 +21,9 @@ import { MandarotyDialogComponent } from './components/dialogs/mandaroty-dialog/
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { SearchpatternsComponent } from './components/searchpattern/searchpatterns.component';
+import { FilterPatternComponent } from './components/searchpattern/filterpattern/filterpattern.component';
+import { TablepatternComponent } from './components/searchpattern/tablepattern/tablepattern.component';
 
 
 
@@ -32,6 +35,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     OperationKOComponent,
     OperationOKComponent,
     MandarotyDialogComponent,
+    SearchpatternsComponent,
+    TablepatternComponent,
+    FilterPatternComponent,
   ],
   imports: [
     BrowserModule, 

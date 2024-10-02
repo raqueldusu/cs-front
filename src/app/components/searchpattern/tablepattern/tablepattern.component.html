@@ -1,0 +1,146 @@
+<section class="results">
+  <div class="field 100">
+    <div class="container uploader-status" *ngIf="spinner">
+      <mat-progress-bar
+        class="example-margin"
+        [color]="color"
+        [mode]="mode"
+        [value]="value"
+        [bufferValue]="bufferValue"
+      >
+      </mat-progress-bar>
+    </div>
+    <div class="tabla_header">
+      <label>Filtrar</label>
+
+      <input
+        class="searchtable"
+        placeholder="Texto a buscar..."
+        style="max-width: 360px; width: calc(100% - 116px)"
+        (keyup)="filter($event)"
+      />
+
+      <mat-button [matMenuTriggerFor]="menuAcc" style="padding-right: 10px; padding-left: 10px">
+        <i class="las la-ellipsis-v"></i>
+      </mat-button>
+
+      <mat-menu #menuAcc="matMenu">
+        <button mat-menu-item (click)="deletePatterns()">Eliminar</button>
+      </mat-menu>
+
+      <button class="drop-button transparent" (click)="refresh()" title="Refrescar">
+        <i class="las fa-arrows-rotate"></i>
+      </button>
+      <button class="drop-button transparent" (click)="newLote()" title="Registrar Lote Nuevo">
+        <i class="las la-plus"></i>
+      </button>
+      <button id="display-mode" class="drop-button transparent landscape">
+        <i class="las la-tablet"></i>
+      </button>
+    </div>
+
+    <div class="landscape-layer">
+      <table
+        mat-table
+        [dataSource]="patternDataSource"
+        id="patternTable"
+        class="dataTable first-column landscape"
+        matSort
+        #empTbSort="matSort"
+        matSortActive="comp_name_sort"
+        matSortStart="desc"
+        (matSortChange)="customSort($event)"
+      >
+        <ng-container matColumnDef="check">
+          <th *matHeaderCellDef id="c00" style="width: 32px">
+            <input
+              #ref
+              type="checkbox"
+              id="tselected00"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+            />
+          </th>
+          <td *matCellDef="let row" (click)="$event.stopPropagation()">
+            <input type="checkbox" id="tselected01" name="tselected01"
+              (click)="$event.stopPropagation(); clickedRows.has(row) ? clickedRows.delete(row) : clickedRows.add(row);"
+              (change)="$event ? selection.toggle(row) : null; isSomeSelected()"
+              [checked]="selection.isSelected(row)"
+            />
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ct">
+          <th *matHeaderCellDef id="c01" style="width: 150px" mat-sort-header>CT</th>
+          <td *matCellDef="let pattern" (click)="$event.stopPropagation()" 
+            (change)="$event ? selection.toggle(pattern) : null">
+            {{ pattern.ct }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="filename">
+          <th *matHeaderCellDef id="c01" style="width: 120px" mat-sort-header>Nombre fichero</th>
+          <td *matCellDef="let pattern" (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(pattern) : null">
+            {{ pattern.filename }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="size">
+          <th *matHeaderCellDef id="c02" mat-sort-header>Tamaño</th>
+          <td *matCellDef="let pattern" (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(pattern) : null">
+            {{ pattern.size }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="numberColours">
+          <th *matHeaderCellDef id="c03" mat-sort-header>Nº de colores</th>
+          <td *matCellDef="let pattern" (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(pattern) : null">
+            {{ pattern.numberColours | number: '' : 'es' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="preview">
+          <th *matHeaderCellDef id="c04" mat-sort-header>Importe</th>
+          <td *matCellDef="let pattern" (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(pattern) : null">
+            {{ pattern.preview }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="btn1">
+          <th *matHeaderCellDef id="c05" class="actions" style="width: 48px"></th>
+          <td mat-cell *matCellDef="let pattern" class="edit-zones" (click)="$event.stopPropagation()">
+            <a class="btn icon" title="Consulta pagos acumulados" (click)="searchPattern(pattern)"
+              ><i class="las la-check-double"></i
+            ></a>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="clickedRows.has(row) ? clickedRows.delete(row) : clickedRows.add(row)"
+          [class.selection]="clickedRows.has(row)"
+        ></tr>
+      </table>
+    </div>
+    <div class="dataTable-bottom">
+      <mat-paginator
+        #paginator
+        appStylePaginator
+        class="pager"
+        [length]="totalRows"
+        [pageIndex]="currentPage"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageChanged($event)"
+        aria-label="Select page"
+        [showFirstLastButtons]="true"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</section>

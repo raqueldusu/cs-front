@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Isellection } from 'src/app/interfaces/common/isellection';
+import { Iselection } from 'src/app/interfaces/common/iselection';
 import { iapicommonrequest } from 'src/app/interfaces/load/iapicommonrequest';
+import { IPreviewResponse } from 'src/app/interfaces/load/ipreviewresponse';
+import { ISendImageRequest } from 'src/app/interfaces/load/isendimagerequest';
 
 @Injectable({
   providedIn: 'root',
@@ -10,30 +12,27 @@ import { iapicommonrequest } from 'src/app/interfaces/load/iapicommonrequest';
 export class LoadService {
   httpOptions = {
     headers: new HttpHeaders({
-      Authorization: 'Bearer ' ,
+      'Content-Type': 'application/json',
     }),
+    responseType: 'text' as 'json',
   };
 
   constructor(private httpClient: HttpClient) {}
 
-  cargaImagen(bodyDataFlow: iapicommonrequest): Observable<void> {
-    let urlApi: string = `http://localhost:8293/v1/crossstitch/load/loadImage`;
-    return this.httpClient.get<void>(urlApi, this.httpOptions).pipe();
-  }
-
-  procesarImagen(bodyDataFlow: iapicommonrequest): Observable<String> {
+  procesarImagen(request: ISendImageRequest): Observable<IPreviewResponse> {
     let urlApi: string = `http://localhost:8293/v1/crossstitch/load/processImage`;
-    return this.httpClient.post<String>(urlApi, JSON.stringify(bodyDataFlow), this.httpOptions).pipe();
+    return this.httpClient.post<IPreviewResponse>(urlApi, JSON.stringify(request), this.httpOptions).pipe();
   }
 
-  descargarPatron(bodyDataFlow: iapicommonrequest): Observable<void> {
+  descargarPatron(request: ISendImageRequest): Observable<string> {
     let urlApi: string = `http://localhost:8293/v1/crossstitch/load/savePattern`;
-    return this.httpClient.get<void>(urlApi, this.httpOptions).pipe();
+
+    return this.httpClient.post<string>(urlApi, JSON.stringify(request), this.httpOptions).pipe();
   }
 
-  searchCollections(): Observable<Isellection[]> {
+  searchCollections(): Observable<Iselection[]> {
     let urlAPI: string = `http://localhost:8293/v1/liquidaciones/collections/list`;
-    return this.httpClient.get<Isellection[]>(urlAPI).pipe();
+    return this.httpClient.get<Iselection[]>(urlAPI).pipe();
   }
 
 }

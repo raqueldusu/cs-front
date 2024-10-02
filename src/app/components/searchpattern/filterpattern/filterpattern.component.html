@@ -1,0 +1,40 @@
+<form [formGroup]="form" class="it-flexbox" id="frm1" style="max-width: 1280px; margin: 0 auto" *ngIf="showFilter">
+  <fieldset class="container-grid">
+    <div class="field">
+      <label>Tamaño</label>
+      <select formControlName="selectedSize" class="form-control" panelClass="myPanelClass" name="patternSize">
+        <option *ngFor="let size of sizeList" [value]="size.id" [selected]="size.id == seleccionadoSize">
+          {{ size.desc }}
+        </option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Colores</label>
+      <input type="text" id="colours" name="colours" formControlName="colours" class="form-control" />
+    </div>
+    <div class="field">
+      <label>Colección</label>
+      <select formControlName="selectedCollection" class="form-control" panelClass="myPanelClass" name="collection">
+        <option *ngFor="let collection of collectionList" [value]="collection.id" [selected]="collection.id == seleccionadoCollection">
+          {{ collection.desc }}
+        </option>
+      </select>
+    </div>
+    <div class="field">
+      <!--Dejamos este vacio por la estructura-->
+    </div>
+
+    <div class="field">
+      <label>Nombre del Fichero</label>
+      <input type="text" id="titulo" name="titulo" formControlName="fileName" class="form-control" />
+    </div>
+
+    <div class="field buttons">
+      <button type="reset" class="reset" (click)="clear()">Limpiar</button>
+      &nbsp;
+      <button type="submit" (click)="getPatterns($event)">Buscar</button>
+    </div>
+  </fieldset>
+</form>
+<br />
+<app-tablepattern></app-tablepattern>

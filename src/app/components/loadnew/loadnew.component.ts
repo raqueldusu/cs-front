@@ -7,8 +7,8 @@ import { MandarotyDialogComponent } from '../dialogs/mandaroty-dialog/mandaroty-
 import { OperationOKComponent } from '../dialogs/operationOK/operation-ok/operation-ok.component';
 import { LoadService } from 'src/app/services/load/load.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Isellection } from 'src/app/interfaces/common/isellection';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Iselection } from 'src/app/interfaces/common/iselection';
+import { ISendImageRequest } from 'src/app/interfaces/load/isendimagerequest';
 
 @Component({
   selector: 'app-loadnew',
@@ -18,11 +18,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class LoadNewComponent implements OnInit {
   form: FormGroup;
 
-  collectionList: Isellection[] = [];
+  collectionList: Iselection[] = [];
   showStopBackup: boolean = false;
   showStopCleanUpBackup: boolean = false;
   imageB64: string = '';
   previewB64: string = '';
+  height: number = 0;
 
   constructor(
     private router: Router,
@@ -43,9 +44,10 @@ export class LoadNewComponent implements OnInit {
 
   getCollections() {
     this.loadService.searchCollections().subscribe((response) => {
-      const todos: Isellection = {
+      const todos: Iselection = {
         id: '',
         desc: 'Todos',
+        selected: true,
       };
 
       response.unshift(todos);
@@ -74,32 +76,51 @@ export class LoadNewComponent implements OnInit {
     
   }
 
-  cargaImagen() {
-    let idSet: string = '';
-    const bodyDataFlow: iapicommonrequest = {
-      commandId: '',
-      parameter: idSet,
-      user: ''
-    };
-    this.loadService.cargaImagen(bodyDataFlow).subscribe((res: any) => {
-    });
-
-    this.dialog.open(OperationOKComponent);
-  }
-
   procesarImagen() {
-    let idSet: string = '';
+    let mandatory: boolean = false;
+    let width: number = 0;
+    let numColours: number = 0;
+    let image: string = '';
 
-    if (idSet === '') {
+    if (this.width != null && this.width.value != '0' && this.width.value != '') {
+      width = this.width.value;
+    } else {
+      mandatory = true;
+    }
+
+    if (this.nColores != null && this.nColores.value != '0' && this.nColores.value != '') {
+      numColours = this.nColores.value;
+    } else {
+      mandatory = true;
+    }
+
+    if(this.imageB64 != null && this.imageB64 != ''){
+      image = this.imageB64;
+    } else {
+      mandatory = true;
+    }
+
+    if (mandatory){
       this.dialog.open(MandarotyDialogComponent);
     } else {
-      const bodyDataFlow: iapicommonrequest = {
-        commandId: '',
-        parameter: idSet,
-        user: ''
-      };
 
-      this.loadService.procesarImagen(bodyDataFlow).subscribe((res: any) => {});
+      const request: ISendImageRequest = {
+        width: width,
+        colours: numColours,
+        image: image,
+        name: '',
+        user: '',
+        collection: '',
+      }
+
+      this.loadService.procesarImagen(request).subscribe((result) => {
+        if (result){
+          setTimeout(() => {
+            this.previewB64 = result.image;
+            this.height = result.height;
+          }, 2000)
+        }
+      });
 
       setTimeout(() => {
         this.dialog.open(OperationOKComponent);
@@ -111,31 +132,70 @@ export class LoadNewComponent implements OnInit {
     return this.form.get('width');
   }
 
-  get height() {
-    return this.form.get('height');
-  }
-
   get nColores() {
     return this.form.get('numberColours');
   }
 
-  get ct() {
-    return this.form.get('ct');
+  get collection() {
+    return this.form.get('collection');
   }
 
-  get fileName() {
-    return this.form.get('filename');
+  get name() {
+    return this.form.get('name');
   }
 
-  descargarPatron() {
-    const bodyDataFlow: iapicommonrequest = {
-      commandId: '',
-      parameter: '',
-      user: ''
-    };
+  guardarPatron() {
+    let mandatory: boolean = false;
+    let width: number = 0;
+    let numColours: number = 0;
+    let image: string = '';
+    let name: string = '';
+    let collection: string = '';
 
-    this.loadService.descargarPatron(bodyDataFlow).subscribe((res: any) => {});
-    this.dialog.open(OperationOKComponent);
+    if (this.width != null && this.width.value != '0' && this.width.value != '') {
+      width = this.width.value;
+    } else {
+      mandatory = true;
+    }
+
+    if (this.name != null && this.name.value != '0' && this.name.value != '') {
+      name = this.name.value;
+    } else {
+      mandatory = true;
+    }
+
+    if (this.nColores != null && this.nColores.value != '0' && this.nColores.value != '') {
+      numColours = this.nColores.value;
+    } else {
+      mandatory = true;
+    }
+    if(this.collection != null && this.collection.value != ''){
+      collection = this.collection.value;
+    }
+
+    if(this.imageB64 != null && this.imageB64 != ''){
+      image = this.imageB64;
+    } else {
+      mandatory = true;
+    }
+
+    if (mandatory){
+      this.dialog.open(MandarotyDialogComponent);
+    } else {
+      const request: ISendImageRequest = {
+        width: width,
+        colours: numColours,
+        image: image,
+        name: name,
+        user: '',
+        collection: collection,
+      }
+
+      this.loadService.descargarPatron(request).subscribe((res: any) => {});
+      this.dialog.open(OperationOKComponent);
+    }
+
+    
   }
 
 }
