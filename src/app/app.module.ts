@@ -24,6 +24,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SearchpatternsComponent } from './components/searchpattern/searchpatterns.component';
 import { FilterPatternComponent } from './components/searchpattern/filterpattern/filterpattern.component';
 import { TablepatternComponent } from './components/searchpattern/tablepattern/tablepattern.component';
+import { TableStockComponent } from './components/stock/tablestock/tablestock.component';
+import { FilterStockComponent } from './components/stock/filterstock/filterstock.component';
+import { SearchStockComponent } from './components/stock/searchstock.component';
 
 
 
@@ -35,9 +38,12 @@ import { TablepatternComponent } from './components/searchpattern/tablepattern/t
     OperationKOComponent,
     OperationOKComponent,
     MandarotyDialogComponent,
-    SearchpatternsComponent,
     TablepatternComponent,
     FilterPatternComponent,
+    SearchpatternsComponent,
+    TableStockComponent,
+    FilterStockComponent,
+    SearchStockComponent,   
   ],
   imports: [
     BrowserModule, 

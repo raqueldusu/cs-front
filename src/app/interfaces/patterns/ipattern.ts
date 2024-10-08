@@ -1,8 +1,8 @@
 export interface Ipattern {
-  id: string;
+  idPattern: string;
   filename: string;
   numberColours: number;
-  size: string;
+  size: number;
   collection: string;
-  preview: string;
+  img: string;
 }

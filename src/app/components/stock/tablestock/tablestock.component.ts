@@ -8,16 +8,16 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import es from '@angular/common/locales/es';
-import { GetPatternsService } from 'src/app/services/patterns/get-patterns.service';
-import { IpatternRequest } from 'src/app/interfaces/patterns/ipattern-request';
-import { Ipattern } from 'src/app/interfaces/patterns/ipattern';
+import { IStock } from 'src/app/interfaces/stock/istock';
+import { IApiStockFilter } from 'src/app/interfaces/stock/iapistockfilter';
+import { SearchstockService } from 'src/app/services/stock/searchstock.service';
 
 @Component({
-  selector: 'app-tablepattern',
-  templateUrl: './tablepattern.component.html',
-  styleUrls: ['./tablepattern.component.css'],
+  selector: 'app-tablestock',
+  templateUrl: './tablestock.component.html',
+  styleUrls: ['./tablestock.component.css'],
 })
-export class TablepatternComponent implements OnInit, AfterViewInit {
+export class TableStockComponent implements OnInit, AfterViewInit {
   spanishRangeLabel = (page: number, pageSize: number, length: number) => {
     if (length == 0 || pageSize == 0) {
       return `0 de ${length}`;
@@ -31,7 +31,7 @@ export class TablepatternComponent implements OnInit, AfterViewInit {
     return `${startIndex + 1} - ${endIndex} de ${length}`;
   };
 
-  patternDataSource: MatTableDataSource<Ipattern> = new MatTableDataSource<Ipattern>();
+  stockDataSource: MatTableDataSource<IStock> = new MatTableDataSource<IStock>();
   displayedColumns = [
     'check',
     'filename',
@@ -62,31 +62,31 @@ export class TablepatternComponent implements OnInit, AfterViewInit {
   @ViewChild('empTbSort') empTbSort = new MatSort();
 
   constructor(
-    private patternService: GetPatternsService,
+    private stockService: SearchstockService,
     private router: Router,
   ) {}
 
   ngOnInit(): void {
     setTimeout(() => {
       registerLocaleData(es);
-      this.getPattern(this.sortColum, false);
+      this.getStock(this.sortColum, false);
     }, 1100);
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.patternDataSource.paginator = this.paginator;
+      this.stockDataSource.paginator = this.paginator;
     });
   }
 
-  getPattern(sortColum: string, pageChange: boolean, request?: IpatternRequest) {
+  getStock(sortColum: string, pageChange: boolean, request?: IApiStockFilter) {
     this.spinner = true;
     this.clickedRows.clear();
     this.selection.clear();
 
-    this.patternService.getPattern(this.currentPage, this.pageSize, sortColum, request).subscribe((response) => {
+    this.stockService.searchStock(this.currentPage, this.pageSize, sortColum, request).subscribe((response) => {
       if (response != null && response != undefined) {
-        this.patternDataSource = new MatTableDataSource<Ipattern>(response.item_list);
+        this.stockDataSource = new MatTableDataSource<IStock>(response.item_list);
 
         if (response.paging != null && response.paging != undefined) {
           this.currentPage = response.paging.page_number;
@@ -115,7 +115,7 @@ export class TablepatternComponent implements OnInit, AfterViewInit {
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
-    this.getPattern(this.sortColum, true);
+    this.getStock(this.sortColum, true);
   }
 
   customSort = (sort: Sort) => {
@@ -126,23 +126,23 @@ export class TablepatternComponent implements OnInit, AfterViewInit {
     }
 
     if (this.currentPage != 0) {
-      this.getPattern(this.sortColum, true);
+      this.getStock(this.sortColum, true);
     } else {
-      this.getPattern(this.sortColum, false);
+      this.getStock(this.sortColum, false);
     }
   };
 
   filter = (event: Event) => {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.patternDataSource.filter = filterValue.trim().toLocaleLowerCase();
+    this.stockDataSource.filter = filterValue.trim().toLocaleLowerCase();
   };
 
   refresh() {
-    this.getPattern(this.sortColum, false);
+    this.getStock(this.sortColum, false);
   }
 
-  searchPattern(pattern: Ipattern) {
-    this.router.navigate(['/consulta-patron', pattern.idPattern]);
+  searchStock(stock: IStock) {
+    this.router.navigate(['/consulta-patron', stock.idStock]);
   }
 
   newLote() {
@@ -155,7 +155,7 @@ export class TablepatternComponent implements OnInit, AfterViewInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.patternDataSource.data.length;
+    const numRows = this.stockDataSource.data.length;
     return numSelected === numRows;
   }
 

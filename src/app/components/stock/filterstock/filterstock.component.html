@@ -1,0 +1,55 @@
+<form [formGroup]="form" class="it-flexbox" (ngSubmit)="getStock(form)" style="max-width: 1280px; margin: 0 auto" *ngIf="showFilter">
+  <fieldset class="container-grid">
+
+    <div class="field">
+      <label>Cantidad</label>
+      <input type="number" id="amount" name="amount" formControlName="amount" class="form-control" />
+    </div>
+
+    <div class="field">
+      <label>Id</label>
+      <input type="text" id="stockId" name="stockId" formControlName="stockId" class="form-control" />
+    </div>
+
+    <div class="field">
+      <label>Color</label>
+      <select formControlName="colours" class="form-control" panelClass="myPanelClass" name="colours">
+        <option *ngFor="let colours of colourList" [value]="colours.id" [selected]="colours.id == seleccionadoColour">
+          {{ colours.desc }}
+        </option>
+      </select>
+    </div>
+    <div class="field">
+      <!--Dejamos este vacio por la estructura-->
+    </div>
+
+    <div class="field">
+      <label>Nombre</label>
+      <input type="text" id="name" name="name" formControlName="name" class="form-control" />
+    </div>
+
+    <div class="field">
+      <label>R</label>
+      <input type="number" id="red" name="red" formControlName="red" class="form-control" />
+    </div>
+
+    <div class="field">
+      <label>G</label>
+      <input type="number" id="green" name="green" formControlName="green" class="form-control" />
+    </div>
+
+    <div class="field">
+      <label>B</label>
+      <input type="number" id="blue" name="blue" formControlName="blue" class="form-control" />
+    </div>
+
+
+    <div class="field buttons">
+      <button type="reset" class="reset" (click)="clear()">Limpiar</button>
+      &nbsp;
+      <button type="submit">Buscar</button>
+    </div>
+  </fieldset>
+</form>
+<br />
+<app-tablestock></app-tablestock>

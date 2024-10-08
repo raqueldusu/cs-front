@@ -1,0 +1,79 @@
+<section class="results">
+  <div class="field 100">
+    <div class="container uploader-status" *ngIf="spinner">
+      <mat-progress-bar
+        class="example-margin"
+        [color]="color"
+        [mode]="mode"
+        [value]="value"
+        [bufferValue]="bufferValue"
+      >
+      </mat-progress-bar>
+    </div>
+    <div class="tabla_header">
+      <label>Filtrar</label>
+
+      <input
+        class="searchtable"
+        placeholder="Texto a buscar..."
+        style="max-width: 360px; width: calc(100% - 116px)"
+        (keyup)="filter($event)"
+      />
+
+      <mat-button [matMenuTriggerFor]="menuAcc" style="padding-right: 10px; padding-left: 10px">
+        <i class="las la-ellipsis-v"></i>
+      </mat-button>
+
+      <mat-menu #menuAcc="matMenu">
+        <button mat-menu-item (click)="deletePatterns()">Eliminar</button>
+      </mat-menu>
+
+      <button class="drop-button transparent" (click)="refresh()" title="Refrescar">
+        <i class="las fa-arrows-rotate"></i>
+      </button>
+      <button class="drop-button transparent" (click)="newLote()" title="Registrar Lote Nuevo">
+        <i class="las la-plus"></i>
+      </button>
+      <button id="display-mode" class="drop-button transparent landscape">
+        <i class="las la-tablet"></i>
+      </button>
+    </div>
+
+    <div class="landscape-layer">
+      <ul
+        mat-table
+        id="stockTable"
+        matSort
+        #empTbSort="matSort"
+        matSortActive="comp_name_sort"
+        matSortStart="desc"
+        (matSortChange)="customSort($event)"
+      >
+        <ng-container *ngFor="let stock in stockDataSource">
+          <li>
+            <figure class="category-banner">
+              <img [src]="stock.img" alt="Sin imagen" loading="lazy" width="510" height="600"
+                class="w-100">
+            </figure>
+            <a href="#" class="btn btn-secondary">{{stock.idStock}} - {{stock.name}}</a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="dataTable-bottom">
+      <mat-paginator
+        #paginator
+        appStylePaginator
+        class="pager"
+        [length]="totalRows"
+        [pageIndex]="currentPage"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageChanged($event)"
+        aria-label="Select page"
+        [showFirstLastButtons]="true"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</section>
